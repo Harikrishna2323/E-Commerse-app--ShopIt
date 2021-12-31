@@ -27,6 +27,9 @@
     "validator": "^13.6.0",
     "nodemon": "^2.0.15"
   },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Harikrishna2323/E-Commerse-app--ShopIt.git"
