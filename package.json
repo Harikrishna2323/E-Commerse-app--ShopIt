@@ -1,6 +1,6 @@
 {
   "name": "e-commerce",
-  "version": "1.0.0",
+  "version": "16.4.0",
   "description": "> Complete E-commerce site built with Node.js, React, Redux, Express, MongoDB",
   "main": "server.js",
   "scripts": {
