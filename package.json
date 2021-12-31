@@ -28,5 +28,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harikrishna2323/E-Commerse-app--ShopIt.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Harikrishna2323/E-Commerse-app--ShopIt/issues"
+  },
+  "homepage": "https://github.com/Harikrishna2323/E-Commerse-app--ShopIt#readme"
 }
