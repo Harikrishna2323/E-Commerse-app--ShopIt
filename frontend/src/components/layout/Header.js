@@ -8,6 +8,7 @@ import { logout } from "../../actions/userActions";
 
 const Header = () => {
   const alert = useAlert();
+
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
@@ -22,11 +23,7 @@ const Header = () => {
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
             <Link to="/">
-              <img
-                className="header--logo"
-                src="./images/shopit_logo.png"
-                alt="logo"
-              />
+              <h2>ShopNow</h2>
             </Link>
           </div>
         </div>
@@ -93,7 +90,7 @@ const Header = () => {
             </div>
           ) : (
             <Link to="/login" className="btn ml-4" id="login_btn">
-              Login
+              Login Now
             </Link>
           )}
         </div>
