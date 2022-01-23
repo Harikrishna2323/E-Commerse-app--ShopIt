@@ -14,7 +14,7 @@ import {
 } from "../../actions/orderActions";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
 
-const ProcessOrder = ({ match }) => {
+const ProcessOrder = ({ match, history }) => {
   const [status, setStatus] = useState("");
 
   const alert = useAlert();
@@ -44,6 +44,7 @@ const ProcessOrder = ({ match }) => {
     if (isUpdated) {
       alert.success("Order updated successfully");
       dispatch({ type: UPDATE_ORDER_RESET });
+      history.push("/dashboard");
     }
   }, [dispatch, alert, error, isUpdated, orderId]);
 
