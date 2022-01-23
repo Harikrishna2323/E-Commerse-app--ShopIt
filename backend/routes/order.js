@@ -9,12 +9,12 @@ router
   .post(authMiddleware.isAuthenticatedUser, orderController.newOrder);
 
 router
-  .route("/order/:id")
-  .get(authMiddleware.isAuthenticatedUser, orderController.getSingleOrder);
-
-router
   .route("/orders/me")
   .get(authMiddleware.isAuthenticatedUser, orderController.myOrders);
+
+router
+  .route("/order/:id")
+  .get(authMiddleware.isAuthenticatedUser, orderController.getSingleOrder);
 
 router
   .route("/admin/orders")

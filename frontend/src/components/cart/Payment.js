@@ -1,16 +1,22 @@
 import React, { Fragment, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
-import Metadata from "../layout/MetaData";
-import { createOrder, clearErrors } from "../../actions/orderActions";
+
+import MetaData from "../layout/MetaData";
 import CheckoutSteps from "./CheckoutSteps";
+
+import { useAlert } from "react-alert";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder, clearErrors } from "../../actions/orderActions";
+
 import {
   useStripe,
   useElements,
+  loadStripe,
+  PaymentElement,
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+
 import axios from "axios";
 
 const options = {
@@ -29,6 +35,7 @@ const Payment = ({ history }) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
   const { error } = useSelector((state) => state.newOrder);
@@ -52,12 +59,14 @@ const Payment = ({ history }) => {
     order.taxPrice = orderInfo.taxPrice;
     order.totalPrice = orderInfo.totalPrice;
   }
+
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     document.querySelector("#pay_btn").disabled = true;
 
     let res;
@@ -67,13 +76,17 @@ const Payment = ({ history }) => {
           "Content-Type": "application/json",
         },
       };
+
       res = await axios.post("/api/v1/payment/process", paymentData, config);
 
       const clientSecret = res.data.client_secret;
 
+      console.log(clientSecret);
+
       if (!stripe || !elements) {
         return;
       }
+
       const result = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -83,21 +96,23 @@ const Payment = ({ history }) => {
           },
         },
       });
+
       if (result.error) {
         alert.error(result.error.message);
         document.querySelector("#pay_btn").disabled = false;
       } else {
-        //the payment is processed
+        // The payment is processed or not
         if (result.paymentIntent.status === "succeeded") {
-          //New Order
           order.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,
           };
+
           dispatch(createOrder(order));
+
           history.push("/success");
         } else {
-          alert.error("There was some issue while payment processing.");
+          alert.error("There is some issue while payment processing");
         }
       }
     } catch (error) {
@@ -108,9 +123,10 @@ const Payment = ({ history }) => {
 
   return (
     <Fragment>
-      <Metadata title={"Payment Page"} />
+      <MetaData title={"Payment"} />
 
       <CheckoutSteps shipping confirmOrder payment />
+
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
@@ -122,6 +138,7 @@ const Payment = ({ history }) => {
                 id="card_num_field"
                 className="form-control"
                 options={options}
+                value="4000 0027 6000 3184"
               />
             </div>
 

@@ -4,7 +4,7 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 import { Link } from "react-router-dom";
-import { login, clearErrors } from "../../actions/userActions";
+import { login, clearErrors, loadUser } from "../../actions/userActions";
 
 const Login = ({ history, location }) => {
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ const Login = ({ history, location }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push(redirect);
+      history.push("/");
     }
     if (error) {
       alert.error(error);

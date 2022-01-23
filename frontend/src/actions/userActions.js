@@ -99,10 +99,11 @@ export const loadUser = () => async (dispatch) => {
     });
 
     const { data } = await axios.get("/api/v1/me");
+    console.log("user:", data);
 
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
